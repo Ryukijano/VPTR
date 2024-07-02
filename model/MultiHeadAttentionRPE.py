@@ -695,3 +695,4 @@ class MultiheadAttentionRPE(MultiheadAttention):
             return attn_output, q, k, attn_output_weights.sum(dim=1) / num_heads
         else:
             return attn_output, q, k  # additionaly return the query and key
+
