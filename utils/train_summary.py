@@ -5,6 +5,7 @@ import torchvision.transforms as transforms
 from pathlib import Path
 import shutil
 from collections import OrderedDict
+import os
 
 
 def resume_training(module_dict, optimizer_dict, resume_ckpt, loss_name_list = None, map_location = None):
@@ -197,30 +198,40 @@ def visualize_batch_clips(gt_past_frames_batch, gt_future_frames_batch, pred_fra
         file_name = file_dir.joinpath(f'{desc}_clip_{n}.gif')
         save_clip(clip, file_name)
 
+'''Changed due to perms'''
+# def read_code_files():
+#     """
+#     Read all the files under VideoFramePrediction into bytes, and return a dictionary
+#     key of the dict is file name (do not include root dir)
+#     value of the dict is bytes of each file
+#     """
+#     proj_folder = Path(__file__).resolve().parents[1].absolute()
+#     code_files = []
+#     for file in proj_folder.rglob('*'):
+#         file_str = str(file)
+#         if '.git' not in file_str and '__pycache__' not in file_str and '.ipynb_checkpoints' not in file_str:
+#             code_files.append(file)
+    
+#     code_file_dict = {}
+#     for file_name in code_files:
+#         try:
+#             with open(file_name, 'rb') as f:
+#                 str_name = str(file_name).strip().split('VideoFramePrediction')
+#                 str_name = 'VideoFramePrediction' + str_name[-1]
+#                 code_file_dict[str_name] = f.read()
+#         except IsADirectoryError:
+#             pass
+    
+#     return code_file_dict
+
 def read_code_files():
-    """
-    Read all the files under VideoFramePrediction into bytes, and return a dictionary
-    key of the dict is file name (do not include root dir)
-    value of the dict is bytes of each file
-    """
-    proj_folder = Path(__file__).resolve().parents[1].absolute()
-    code_files = []
-    for file in proj_folder.rglob('*'):
-        file_str = str(file)
-        if '.git' not in file_str and '__pycache__' not in file_str and '.ipynb_checkpoints' not in file_str:
-            code_files.append(file)
-    
-    code_file_dict = {}
+    code_files = ['train_AutoEncoder.py', 'dataset.py', 'model.py', 'utils.py']
+    code_snapshots = {}
     for file_name in code_files:
-        try:
-            with open(file_name, 'rb') as f:
-                str_name = str(file_name).strip().split('VideoFramePrediction')
-                str_name = 'VideoFramePrediction' + str_name[-1]
-                code_file_dict[str_name] = f.read()
-        except IsADirectoryError:
-            pass
-    
-    return code_file_dict
+        if os.path.exists(file_name):
+            with open(file_name, 'r') as f:
+                code_snapshots[file_name] = f.read()
+    return code_snapshots
 
 def write_code_files(code_file_dict, parent_dir):
     """
