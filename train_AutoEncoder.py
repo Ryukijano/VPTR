@@ -123,8 +123,8 @@ if __name__ == '__main__':
     device = torch.device('cuda:0')
 
     #####################Init Dataset ###########################
-    data_set_name = 'KTH' #see utils.dataset
-    dataset_dir = '/home/travail/xiyex/KTH'
+    data_set_name = 'MNIST' #see utils.dataset
+    dataset_dir = 'D:\\video_dataset\\VPTR\\MovingMNIST'
     train_loader, val_loader, test_loader, renorm_transform = get_dataloader(data_set_name, N, dataset_dir, num_past_frames, num_future_frames)
 
     #####################Init Models and Optimizer ###########################
