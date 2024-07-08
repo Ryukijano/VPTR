@@ -289,13 +289,13 @@ if __name__ == '__main__':
     num_future_frames = 10
     encH, encW, encC = 8, 8, 528
     img_channels = 1
-    epochs = 50
+    epochs = 10
     N = 4
     AE_lr = 2e-4
     lam_gan = 0.01
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     data_set_name = 'MNIST'
-    dataset_dir = 'D:\\video_dataset\\VPTR\\MovingMNIST'
+    dataset_dir = '/home/ryukijano/work/VPTR/moving-mnist-example'
     train_loader, val_loader, test_loader, renorm_transform = get_dataloader(data_set_name, N, dataset_dir, num_past_frames, num_future_frames)
     VPTR_Enc = VPTREnc(img_channels, feat_dim=encC, n_downsampling=3).to(device)
     VPTR_Dec = VPTRDec(img_channels, feat_dim=encC, n_downsampling=3, out_layer='Tanh').to(device)
