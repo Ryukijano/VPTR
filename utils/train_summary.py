@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 from collections import OrderedDict
 import os
+import io
 
 
 def resume_training(module_dict, optimizer_dict, resume_ckpt, loss_name_list = None, map_location = None):
@@ -150,6 +151,13 @@ def save_ckpt(Modules_dict, Optimizers_dict, epoch, loss_dict, save_dir):
     }, ckpt_file.absolute().as_posix())
 
 def load_ckpt(ckpt_file, map_location = None):
+    ckpt_path = Path(ckpt_file)
+    if not ckpt_path.is_file():
+        raise FileNotFoundError(f"Checkpoint file {ckpt_file} not found!")
+    
+    with open(ckpt_file, 'rb') as f:
+        buffer = io.BytesIO(f.read())
+        
     ckpt = torch.load(ckpt_file, map_location = map_location)
 
     epoch = ckpt["epoch"]

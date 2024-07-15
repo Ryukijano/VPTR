@@ -18,7 +18,7 @@ import random
 
 import cv2
 
-def get_dataloader(data_set_name, batch_size, data_set_dir, test_past_frames = 10, test_future_frames = 10, ngpus = 1, num_workers = 8):
+def get_dataloader(data_set_name, batch_size, data_set_dir, test_past_frames = 10, test_future_frames = 10, ngpus = 1, num_workers = 1):
     if data_set_name == 'KTH':
         norm_transform = VidNormalize(mean = 0.6013795, std = 2.7570653)
         renorm_transform = VidReNormalize(mean = 0.6013795, std = 2.7570653)
@@ -40,7 +40,7 @@ def get_dataloader(data_set_name, batch_size, data_set_dir, test_past_frames = 1
 
         dataset_dir = Path(data_set_dir)
         train_set = MovingMNISTDataset(dataset_dir.joinpath('moving-mnist-train.npz'), train_transform)
-        val_set = MovingMNISTDataset(dataset_dir.joinpath('moving-mnist-val.npz'), train_transform)
+        val_set = MovingMNISTDataset(dataset_dir.joinpath('moving-mnist-valid.npz'), train_transform)
         test_set = MovingMNISTDataset(dataset_dir.joinpath('moving-mnist-test.npz'), test_transform)
     
     
@@ -308,7 +308,7 @@ class MovingMNISTDataset(Dataset):
     
     def load_data(self):
         data = {}
-        np_arr = np.load(self.data_path.absolute().as_posix(), allow_pickle=True)
+        np_arr = np.load(self.data_path.absolute().as_posix())
         for key in np_arr:
             data[key] = np_arr[key]
         return data

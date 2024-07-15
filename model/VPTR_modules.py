@@ -21,7 +21,8 @@ class VPTREnc(nn.Module):
             feat --- (N, T, 256, 16, 16)
         """
         N, T, _, _, _ = x.shape
-        feat = self.encoder(x.flatten(0, 1))
+        #feat = self.encoder(x.flatten(0, 1))
+        feat = self.encoder(x)
         #feat = self.out_proj(feat)
         _, C, H, W = feat.shape
         feat = feat.reshape(N, T, C, H, W)

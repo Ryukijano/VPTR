@@ -139,9 +139,9 @@ def NAR_show_samples(VPTR_Enc, VPTR_Dec, VPTR_Transformer, sample, save_dir):
 if __name__ == '__main__':
     set_seed(2021)
 
-    ckpt_save_dir = Path('/home/travail/xiyex/VPTR_ckpts/BAIR_NAR_MSEGDL_BPNCE01_RPE_ckpt')
-    tensorboard_save_dir = Path('/home/travail/xiyex/VPTR_ckpts/BAIR_NAR_MSEGDL_BPNCE01_RPE_tensorboard')
-    resume_AE_ckpt = Path('/home/travail/xiyex/VPTR_ckpts/BAIR_ResNetAE_MSEGDL_ckpt').joinpath('epoch_64.tar')
+    ckpt_save_dir = Path('/home/ryukijano/work/VPTR/VPTR_ckpts/MNIST')
+    tensorboard_save_dir = Path('/home/ryukijano/work/VPTR/VPTR_ckpts/MNIST_RPE_tensorboard')
+    resume_AE_ckpt = Path('/home/ryukijano/work/VPTR/checkpoints').joinpath('MovingMNIST_AE.tar')
     #resume_ckpt = ckpt_save_dir.joinpath('epoch_88.tar')
     resume_ckpt = None
 
@@ -160,9 +160,9 @@ if __name__ == '__main__':
     num_past_frames = 2
     num_future_frames = 10
     encH, encW, encC = 8, 8, 528
-    img_channels = 3
-    epochs = 100
-    N = 16
+    img_channels = 1
+    epochs = 1
+    N = 4
     #AE_lr = 2e-4
     Transformer_lr = 1e-4
     max_grad_norm = 1.0 
@@ -178,8 +178,8 @@ if __name__ == '__main__':
     save_ckpt_epochs = 2
 
     #####################Init Dataset ###########################
-    data_set_name = 'BAIR'
-    dataset_dir = '/home/travail/xiyex/BAIR'
+    data_set_name = 'MNIST'
+    dataset_dir = '/home/ryukijano/work/VPTR/moving-mnist-example'
     test_past_frames = 2
     test_future_frames = 10
     train_loader, val_loader, test_loader, renorm_transform = get_dataloader(data_set_name, N, dataset_dir, test_past_frames, test_future_frames)
